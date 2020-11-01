@@ -1,6 +1,30 @@
 const CustomError = require("../extensions/custom-error");
 
-module.exports = function transform(/* arr */) {
-  throw new CustomError('Not implemented');
-  // remove line with error and write your code here
-};
+module.exports = function transform(arr) {
+    if (Array.isArray(arr)) {
+        throw new CustomError();
+    }
+    let result = [];
+    for (let i = 0; i < arr.length; ++i) {
+        if (typeof(arr[i]) === "string") {
+            switch(arr[i]) {
+                case "--discard-next": 
+                    i++;
+                    break;
+                case "--discard-prev": 
+                    result.pop();
+                    break;
+                case "--double-next":
+                    if (i + 1 !== arr.length)
+                        result.push(arr[i + 1]);
+                    break;
+                case "--double-prev":
+                    result.push(result[result.length - 1]);
+                    break;
+            }
+        } else { 
+            result.push(arr[i])
+        }
+    }
+    return result;
+}
