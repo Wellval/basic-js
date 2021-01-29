@@ -2,6 +2,7 @@ const CustomError = require("../extensions/custom-error");
 
 const chainMaker = {
   result: '',
+
   getLength() {
     this.result = this.result.split('~~').length;
     return this;
@@ -17,6 +18,7 @@ const chainMaker = {
   },
   removeLink(position) {
     if (this.result === null || this.result[position] === undefined) {
+      this.result = '';
       throw new Error('THROWN');
     }  else {
     this.result = this.result.split('~~');
